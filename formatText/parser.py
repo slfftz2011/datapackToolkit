@@ -35,16 +35,23 @@ def parse_line(line: str) -> list[dict]:
         if link_state == 0:
             return
         display_comps = parse_line(link_display) if link_display else [{'text': ''}]
+    
+        # 根据路径类型决定 action 和对应的值字段名
         if link_path.startswith(('http://', 'https://')):
             action = 'open_url'
-            value = link_path
+            # 新格式使用 'url' 字段
+            value_key = 'url'
         else:
             action = 'run_command'
             if not link_path.startswith('/'):
                 link_path = '/function age:gamerule/' + link_path
-            value = link_path
+            # 新格式使用 'command' 字段
+            value_key = 'command'
+    
+        # 构建 click_event，使用新的字段名
         for comp in display_comps:
-            comp['click_event'] = {'action': action, 'value': value}
+            comp['click_event'] = {'action': action, value_key: link_path}
+    
         components.extend(display_comps)
         link_state = 0
         link_display = ''
