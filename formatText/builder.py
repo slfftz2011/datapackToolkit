@@ -18,7 +18,6 @@ def generate_commands(text: str, pretty: bool = False) -> list[str]:
 
         if pretty:
             json_str = json.dumps(components, ensure_ascii=False, indent=2)
-            json_str = ' '.join(json_str.split())   # 压缩为单行
         else:
             json_str = json.dumps(components, ensure_ascii=False)
         json_str = strip_json_keys(json_str)
