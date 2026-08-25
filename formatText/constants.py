@@ -6,6 +6,6 @@ COLOR_MAP = {
     'c': 'red', 'd': 'light_purple', 'e': 'yellow', 'f': 'white'
 }
 STYLE_MAP = {
-    'l': 'bold', 'o': 'italic', 'n': 'underlined', 'm': 'strikethrough'
+    'l': 'bold', 'o': 'italic', 'n': 'underlined', 'm': 'strikethrough', 'k': 'confiscated'
 }
 DEFAULT_OUTPUT_DIR = "data/minecraft/function"
