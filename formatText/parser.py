@@ -53,26 +53,22 @@ def parse_line(line: str) -> list[dict]:
     while i < n:
         ch = line[i]
 
-        # 处理转义
         if ch == '\\' and i + 1 < n:
             nxt = line[i+1]
-            if nxt == '&':
-                target = text_buf if link_state == 0 else (link_display if link_state == 1 else link_path)
-                target += '&'
-                i += 2
-                continue
-            elif nxt == '\\':
+            if nxt == '\\':
+                # \\ -> \
                 target = text_buf if link_state == 0 else (link_display if link_state == 1 else link_path)
                 target += '\\'
                 i += 2
                 continue
             elif nxt == 'b':
+                # \b -> 两个空格
                 target = text_buf if link_state == 0 else (link_display if link_state == 1 else link_path)
                 target += '  '
                 i += 2
                 continue
             else:
-                # 其他转义保留原样
+                # 其他 \x 保留为 \x
                 target = text_buf if link_state == 0 else (link_display if link_state == 1 else link_path)
                 target += '\\' + nxt
                 i += 2
