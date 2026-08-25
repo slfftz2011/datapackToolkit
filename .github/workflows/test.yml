@@ -1,0 +1,50 @@
+name: Test and Release
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Run generator
+        run: |
+          python formatText/util.py formatText/example.json --pretty
+
+      - name: Package generated functions
+        run: |
+          mkdir -p artifacts
+          cp -r data/age/functions/gamerule artifacts/
+          cd artifacts
+          zip -r ../gamerule_functions.zip gamerule/
+
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: v${{ github.run_number }}
+          release_name: "Auto-generated Release ${{ github.run_number }}"
+          draft: false
+          prerelease: false
+
+      - name: Upload Release Asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./gamerule_functions.zip
+          asset_name: gamerule_functions.zip
+          asset_content_type: application/zip
