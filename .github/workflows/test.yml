@@ -24,9 +24,8 @@ jobs:
       - name: Package generated functions
         run: |
           mkdir -p artifacts
-          cp -r data/age/functions/gamerule artifacts/
-          cd artifacts
-          zip -r ../gamerule_functions.zip gamerule/
+          cp -r data/minecraft/function artifacts/
+          zip -r ../functions.zip artifacts/
 
       - name: Create Release
         id: create_release
@@ -45,6 +44,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./gamerule_functions.zip
-          asset_name: gamerule_functions.zip
+          asset_path: ./functions.zip
+          asset_name: functions.zip
           asset_content_type: application/zip
