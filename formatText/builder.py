@@ -1,6 +1,6 @@
 
 import json
-from .parser import parse_line, strip_json_keys
+from parser import parse_line, strip_json_keys
 
 def generate_commands(text: str, pretty: bool = False) -> list[str]:
     """将多行文本转换为 tellraw 命令列表"""
