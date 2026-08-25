@@ -4,8 +4,8 @@ import argparse
 import json
 import sys
 from pathlib import Path
-from .builder import generate_commands
-from .constants import DEFAULT_OUTPUT_DIR
+from formatText.builder import generate_commands
+from formatText.constants import DEFAULT_OUTPUT_DIR
 
 def main():
     parser = argparse.ArgumentParser(description="生成 gamerule 函数文件")
