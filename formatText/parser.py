@@ -1,5 +1,5 @@
 import re
-from .constants import COLOR_MAP, STYLE_MAP
+from constants import COLOR_MAP, STYLE_MAP
 
 def strip_json_keys(json_str: str) -> str:
     """移除 JSON 键名的双引号"""
