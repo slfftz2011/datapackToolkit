@@ -88,8 +88,19 @@ def parse_line(line: str) -> list[dict]:
             continue
 
         # 处理格式码
+
         if ch == '&' and i + 1 < n:
             code = line[i+1]
+            if code == '&':
+                # 转义 &&
+                if link_state == 0:
+                    text_buf += '&'
+                elif link_state == 1:
+                    link_display += '&'
+                else:
+                    link_path += '&'
+                i += 2
+                continue
             if code == 'r':
                 i += 2
                 continue
